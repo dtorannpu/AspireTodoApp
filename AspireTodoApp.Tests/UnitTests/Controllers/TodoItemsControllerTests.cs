@@ -121,6 +121,21 @@ public class TodoItemsControllerTests
     }
 
     [Fact]
+    public async Task PutTodoItem_ReturnsNotFound_WhenItemDoesNotExist()
+    {
+        // Arrange
+        await using var context = new MockDb().CreateDbContext();
+        var controller = new TodoItemsController(context);
+        var updatedTodo = new TodoItemDTO { Id = 1, Name = "Updated Name", IsComplete = true };
+
+        // Act
+        var result = await controller.PutTodoItem(1, updatedTodo);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
     public async Task PostTodoItem_CreatesNewItem()
     {
         // Arrange
