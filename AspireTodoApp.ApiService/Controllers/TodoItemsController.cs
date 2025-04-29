@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AspireTodoApp.ApiService.Data;
-using AspireTodoApp.ApiService.Models;
+﻿using AspireTodoApp.ApiService.Data;
 using AspireTodoApp.ApiService.Dtos;
+using AspireTodoApp.ApiService.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspireTodoApp.ApiService.Controllers;
 
