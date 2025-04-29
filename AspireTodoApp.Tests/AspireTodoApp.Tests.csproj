@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AspireTodoApp.ApiService\AspireTodoApp.ApiService.csproj" />
     <ProjectReference Include="..\AspireTodoApp.AppHost\AspireTodoApp.AppHost.csproj" />
   </ItemGroup>
 
