@@ -1,0 +1,37 @@
+﻿@AspireTodoApp.ApiService_HostAddress = https://localhost:7519
+
+POST {{AspireTodoApp.ApiService_HostAddress}}/api/todoitems
+Content-Type: application/json
+
+{
+  "name": "walk dog",
+  "isComplete": true
+}
+
+###
+
+GET {{AspireTodoApp.ApiService_HostAddress}}/api/todoitems
+
+###
+
+@id=1
+GET {{AspireTodoApp.ApiService_HostAddress}}/api/todoitems/{{id}}
+
+###
+
+@id=1
+PUT {{AspireTodoApp.ApiService_HostAddress}}/api/todoitems/{{id}}
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "test",
+  "isComplete": true
+}
+
+###
+
+@id=1
+DELETE {{AspireTodoApp.ApiService_HostAddress}}/api/todoitems/{{id}}
+
+###
