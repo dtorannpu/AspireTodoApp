@@ -1,8 +1,13 @@
 ﻿using AspireTodoApp.ApiService.Controllers;
+using AspireTodoApp.ApiService.Data;
 using AspireTodoApp.ApiService.Dtos;
 using AspireTodoApp.ApiService.Models;
 using AspireTodoApp.Tests.UnitTests.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using System.Linq.Expressions;
+using System.Reflection.Metadata;
 
 namespace AspireTodoApp.Tests.UnitTests.Controllers;
 public class TodoItemsControllerTests
@@ -190,5 +195,74 @@ public class TodoItemsControllerTests
 
         // Assert
         Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async Task PutTodoItem_ReturnsNotFound_WhenSaveChangesThrowsDbUpdateConcurrencyException()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<TodoContext>()
+            .UseInMemoryDatabase("TestDb")
+            .Options;
+
+        await using var context = new TodoContext(options);
+        var todoItem = new TodoItem { Id = 2, Name = "Test Item", IsComplete = false };
+        var data = new List<TodoItem>
+        {
+            new TodoItem { Id = 1, Name = "Test Item 1", IsComplete = false },
+        }.AsQueryable();
+
+        var mockSet = new Mock<DbSet<TodoItem>>();
+        mockSet.As<IQueryable<TodoItem>>().Setup(m => m.Provider).Returns(data.Provider);
+        mockSet.As<IQueryable<TodoItem>>().Setup(m => m.Expression).Returns(data.Expression);
+        mockSet.As<IQueryable<TodoItem>>().Setup(m => m.ElementType).Returns(data.ElementType);
+        mockSet.As<IQueryable<TodoItem>>().Setup(m => m.GetEnumerator()).Returns(() => data.GetEnumerator());
+        mockSet.Setup(m => m.FindAsync(It.IsAny<object[]>())).ReturnsAsync(todoItem);
+
+        // モックの DbContext を作成
+        var mockContext = new Mock<TodoContext>(options);
+        mockContext.Setup(m => m.TodoItems)
+            .Returns(mockSet.Object);
+        mockContext.Setup(m => m.SaveChangesAsync(It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new DbUpdateConcurrencyException());
+
+        var controller = new TodoItemsController(mockContext.Object);
+        var updatedTodo = new TodoItemDTO { Id = 2, Name = "Updated Name", IsComplete = true };
+
+        // Act
+        var result = await controller.PutTodoItem(2, updatedTodo);
+
+        // Assert
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async Task PutTodoItem_ReturnsNotFound_WhenSaveChangesFails()
+    {
+        // Arrange
+        var options = new DbContextOptionsBuilder<TodoContext>()
+            .UseInMemoryDatabase("TestDb")
+            .Options;
+
+        await using var context = new TodoContext(options);
+        var todoItem = new TodoItem { Id = 1, Name = "Test Item", IsComplete = false };
+        context.TodoItems.Add(todoItem);
+        await context.SaveChangesAsync();
+
+        // モックの DbContext を作成
+        var mockContext = new Mock<TodoContext>(options);
+        mockContext.Setup(m => m.TodoItems.FindAsync(1L))
+            .ReturnsAsync(todoItem);
+        mockContext.Setup(m => m.SaveChangesAsync(default))
+            .ThrowsAsync(new DbUpdateConcurrencyException());
+
+        var controller = new TodoItemsController(mockContext.Object);
+        var updatedTodo = new TodoItemDTO { Id = 1, Name = "Updated Name", IsComplete = true };
+
+        // Act & Assert
+        await Assert.ThrowsAsync<DbUpdateConcurrencyException>(async () =>
+        {
+            await controller.PutTodoItem(1, updatedTodo);
+        });
     }
 }

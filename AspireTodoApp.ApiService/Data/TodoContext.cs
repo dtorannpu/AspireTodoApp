@@ -10,5 +10,5 @@ public class TodoContext : DbContext
     {
     }
 
-    public DbSet<TodoItem> TodoItems { get; set; } = null!;
+    public virtual DbSet<TodoItem> TodoItems { get; set; } = null!;
 }
