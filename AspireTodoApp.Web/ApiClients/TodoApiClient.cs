@@ -1,9 +1,13 @@
-﻿using AspireTodoApp.Web.Models;
+﻿using AspireTodoApp.Web.Models.Forms;
+using AspireTodoApp.Web.Models.Responses;
 
 namespace AspireTodoApp.Web.ApiClients;
 
 public class TodoApiClient(HttpClient httpClient)
 {
-    public async Task<TodoItem[]> GetTodoItemsAsync(CancellationToken cancellationToken = default) =>
-        await httpClient.GetFromJsonAsync<TodoItem[]>("/api/todoitems", cancellationToken) ?? [];
+    public async Task<TodoItemDto[]> GetTodoItemsAsync(CancellationToken cancellationToken = default) =>
+        await httpClient.GetFromJsonAsync<TodoItemDto[]>("/api/todoitems", cancellationToken) ?? [];
+
+    public async Task<HttpResponseMessage> PostTodoItemAsync(TodoForm form) =>
+        await httpClient.PostAsJsonAsync("/api/todoitems", form);
 }

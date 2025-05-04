@@ -1,18 +1,20 @@
 ﻿@page "/todo"
 @using AspireTodoApp.Web.ApiClients
-@using AspireTodoApp.Web.Models
-@attribute [StreamRendering(true)]
+@using AspireTodoApp.Web.Models.Responses
+@attribute [StreamRendering]
 
 @inject TodoApiClient TodoApi
 
-<h1>Todo</h1>
+<h1>Todo一覧</h1>
 
-@if (todoItems == null)
+@if (_todoItems == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    <NavLink href="/todo/create">新規作成</NavLink>
+
     <table class="table">
         <thead>
             <tr>
@@ -22,7 +24,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var todoItem in todoItems)
+            @foreach (var todoItem in _todoItems)
             {
                 <tr>
                     <td>@todoItem.Id</td>
@@ -35,11 +37,11 @@ else
 }
 
 @code {
-    private TodoItem[]? todoItems;
+    private TodoItemDto[]? _todoItems;
 
     protected override async Task OnInitializedAsync()
     {
-        todoItems = await TodoApi.GetTodoItemsAsync();
+        _todoItems = await TodoApi.GetTodoItemsAsync();
     }
 
 }
