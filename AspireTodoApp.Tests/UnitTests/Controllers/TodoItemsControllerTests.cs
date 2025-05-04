@@ -6,10 +6,9 @@ using AspireTodoApp.Tests.UnitTests.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
 
 namespace AspireTodoApp.Tests.UnitTests.Controllers;
+
 public class TodoItemsControllerTests
 {
     [Fact]
@@ -24,8 +23,8 @@ public class TodoItemsControllerTests
         var result = await controller.GetTodoItems();
 
         // Assert
-        var okResult = Assert.IsType<ActionResult<IEnumerable<TodoItemDTO>>>(result);
-        var items = Assert.IsAssignableFrom<IEnumerable<TodoItemDTO>>(okResult.Value);
+        var okResult = Assert.IsType<ActionResult<IEnumerable<TodoItemDto>>>(result);
+        var items = Assert.IsType<IEnumerable<TodoItemDto>>(okResult.Value, exactMatch: false);
         Assert.Empty(items);
     }
 
@@ -44,9 +43,9 @@ public class TodoItemsControllerTests
         var result = await controller.GetTodoItems();
 
         // Assert
-        var okResult = Assert.IsType<ActionResult<IEnumerable<TodoItemDTO>>>(result);
-        var items = Assert.IsAssignableFrom<IEnumerable<TodoItemDTO>>(okResult.Value);
-        Assert.Equal(2, items.Count());
+        var okResult = Assert.IsType<ActionResult<IEnumerable<TodoItemDto>>>(result);
+        var items = Assert.IsType<IEnumerable<TodoItemDto>>(okResult.Value, exactMatch: false).ToList();
+        Assert.Equal(2, items.Count);
         Assert.Contains(items, i => i.Name == "Test Item 1");
         Assert.Contains(items, i => i.Name == "Test Item 2");
     }
@@ -80,8 +79,8 @@ public class TodoItemsControllerTests
         var result = await controller.GetTodoItem(1); // 存在するIDを指定
 
         // Assert
-        var okResult = Assert.IsType<ActionResult<TodoItemDTO>>(result);
-        var item = Assert.IsType<TodoItemDTO>(okResult.Value);
+        var okResult = Assert.IsType<ActionResult<TodoItemDto>>(result);
+        var item = Assert.IsType<TodoItemDto>(okResult.Value);
         Assert.Equal(1, item.Id);
         Assert.Equal("Test Item", item.Name);
         Assert.True(item.IsComplete);
@@ -97,7 +96,7 @@ public class TodoItemsControllerTests
         await context.SaveChangesAsync();
 
         var controller = new TodoItemsController(context);
-        var updatedTodo = new TodoItemDTO { Id = 1, Name = "Updated Name", IsComplete = true };
+        var updatedTodo = new TodoItemDto { Id = 1, Name = "Updated Name", IsComplete = true };
 
         // Act
         var result = await controller.PutTodoItem(1, updatedTodo);
@@ -116,7 +115,7 @@ public class TodoItemsControllerTests
         // Arrange
         await using var context = new MockDb().CreateDbContext();
         var controller = new TodoItemsController(context);
-        var updatedTodo = new TodoItemDTO { Id = 2, Name = "Updated Name", IsComplete = true };
+        var updatedTodo = new TodoItemDto { Id = 2, Name = "Updated Name", IsComplete = true };
 
         // Act
         var result = await controller.PutTodoItem(1, updatedTodo);
@@ -131,7 +130,7 @@ public class TodoItemsControllerTests
         // Arrange
         await using var context = new MockDb().CreateDbContext();
         var controller = new TodoItemsController(context);
-        var updatedTodo = new TodoItemDTO { Id = 1, Name = "Updated Name", IsComplete = true };
+        var updatedTodo = new TodoItemDto { Id = 1, Name = "Updated Name", IsComplete = true };
 
         // Act
         var result = await controller.PutTodoItem(1, updatedTodo);
@@ -146,14 +145,14 @@ public class TodoItemsControllerTests
         // Arrange
         await using var context = new MockDb().CreateDbContext();
         var controller = new TodoItemsController(context);
-        var newTodo = new TodoItemDTO { Name = "New Item", IsComplete = false };
+        var newTodo = new TodoItemDto { Name = "New Item", IsComplete = false };
 
         // Act
         var result = await controller.PostTodoItem(newTodo);
 
         // Assert
         var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
-        var createdItem = Assert.IsType<TodoItemDTO>(createdResult.Value);
+        var createdItem = Assert.IsType<TodoItemDto>(createdResult.Value);
         Assert.Equal("New Item", createdItem.Name);
         Assert.False(createdItem.IsComplete);
 
@@ -209,7 +208,7 @@ public class TodoItemsControllerTests
         var todoItem = new TodoItem { Id = 2, Name = "Test Item", IsComplete = false };
         var data = new List<TodoItem>
         {
-            new TodoItem { Id = 1, Name = "Test Item 1", IsComplete = false },
+            new() { Id = 1, Name = "Test Item 1", IsComplete = false },
         }.AsQueryable();
 
         var mockSet = new Mock<DbSet<TodoItem>>();
@@ -227,7 +226,7 @@ public class TodoItemsControllerTests
             .ThrowsAsync(new DbUpdateConcurrencyException());
 
         var controller = new TodoItemsController(mockContext.Object);
-        var updatedTodo = new TodoItemDTO { Id = 2, Name = "Updated Name", IsComplete = true };
+        var updatedTodo = new TodoItemDto { Id = 2, Name = "Updated Name", IsComplete = true };
 
         // Act
         var result = await controller.PutTodoItem(2, updatedTodo);
@@ -253,11 +252,11 @@ public class TodoItemsControllerTests
         var mockContext = new Mock<TodoContext>(options);
         mockContext.Setup(m => m.TodoItems.FindAsync(1L))
             .ReturnsAsync(todoItem);
-        mockContext.Setup(m => m.SaveChangesAsync(default))
+        mockContext.Setup(m => m.SaveChangesAsync(CancellationToken.None))
             .ThrowsAsync(new DbUpdateConcurrencyException());
 
         var controller = new TodoItemsController(mockContext.Object);
-        var updatedTodo = new TodoItemDTO { Id = 1, Name = "Updated Name", IsComplete = true };
+        var updatedTodo = new TodoItemDto { Id = 1, Name = "Updated Name", IsComplete = true };
 
         // Act & Assert
         await Assert.ThrowsAsync<DbUpdateConcurrencyException>(async () =>
