@@ -1,4 +1,4 @@
-﻿using AspireTodoApp.DataAccess;
+﻿using AspireTodoApp.DataAccess.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspireTodoApp.Tests.UnitTests.Helpers;

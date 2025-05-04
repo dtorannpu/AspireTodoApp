@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.Tests", "Aspi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.DataAccess", "AspireTodoApp.DataAccess\AspireTodoApp.DataAccess.csproj", "{280C5006-3741-7A09-5F50-CB7C53D6205C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.MigrationService", "AspireTodoApp.MigrationService\AspireTodoApp.MigrationService.csproj", "{FFAEBEA7-9F0B-1AB1-5F47-2B817E9916C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFAEBEA7-9F0B-1AB1-5F47-2B817E9916C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFAEBEA7-9F0B-1AB1-5F47-2B817E9916C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFAEBEA7-9F0B-1AB1-5F47-2B817E9916C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFAEBEA7-9F0B-1AB1-5F47-2B817E9916C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

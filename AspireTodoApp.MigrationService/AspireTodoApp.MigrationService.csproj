@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-AspireTodoApp.MigrationService-bb8f6b0a-91b8-4ca1-8fe9-c3593d43e556</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.2.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AspireTodoApp.DataAccess\AspireTodoApp.DataAccess.csproj" />
+    <ProjectReference Include="..\AspireTodoApp.ServiceDefaults\AspireTodoApp.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>
