@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AspireTodoApp.ApiService\AspireTodoApp.ApiService.csproj" />
     <ProjectReference Include="..\AspireTodoApp.AppHost\AspireTodoApp.AppHost.csproj" />
+    <ProjectReference Include="..\AspireTodoApp.DataAccess\AspireTodoApp.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

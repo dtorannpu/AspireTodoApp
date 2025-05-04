@@ -1,7 +1,7 @@
 ﻿using AspireTodoApp.ApiService.Controllers;
-using AspireTodoApp.ApiService.Data;
 using AspireTodoApp.ApiService.Dtos;
-using AspireTodoApp.ApiService.Models;
+using AspireTodoApp.DataAccess;
+using AspireTodoApp.DataAccess.Entities;
 using AspireTodoApp.Tests.UnitTests.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

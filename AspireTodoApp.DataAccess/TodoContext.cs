@@ -1,7 +1,7 @@
-﻿using AspireTodoApp.ApiService.Models;
+﻿using AspireTodoApp.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspireTodoApp.ApiService.Data;
+namespace AspireTodoApp.DataAccess;
 
 public class TodoContext(DbContextOptions<TodoContext> options) : DbContext(options)
 {

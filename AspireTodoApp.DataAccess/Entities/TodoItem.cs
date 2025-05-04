@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AspireTodoApp.ApiService.Models;
+namespace AspireTodoApp.DataAccess.Entities;
 
 public class TodoItem
 {

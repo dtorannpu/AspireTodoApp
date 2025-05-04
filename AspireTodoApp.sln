@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.AppHost", "AspireTodoApp.AppHost\AspireTodoApp.AppHost.csproj", "{E882BADD-8A4A-4C93-A131-4DF512909FB4}"
 EndProject
@@ -11,6 +11,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.Web", "AspireTodoApp.Web\AspireTodoApp.Web.csproj", "{EC9DDE0F-95DD-43BB-16DB-8C723FE63D1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.Tests", "AspireTodoApp.Tests\AspireTodoApp.Tests.csproj", "{0FF31CC4-0B61-3237-D9EC-E6870906C5A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspireTodoApp.DataAccess", "AspireTodoApp.DataAccess\AspireTodoApp.DataAccess.csproj", "{280C5006-3741-7A09-5F50-CB7C53D6205C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{0FF31CC4-0B61-3237-D9EC-E6870906C5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF31CC4-0B61-3237-D9EC-E6870906C5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF31CC4-0B61-3237-D9EC-E6870906C5A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{280C5006-3741-7A09-5F50-CB7C53D6205C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
