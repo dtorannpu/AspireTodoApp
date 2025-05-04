@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using AspireTodoApp.DataAccess.Contexts;
+using AspireTodoApp.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -15,7 +16,7 @@ public class Worker(
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        using var activity = activitySource.StartActivity("Migrating database", ActivityKind.Client);
+        using var activity = activitySource.StartActivity(ActivityKind.Client);
         try
         {
             using var scope = serviceProvider.CreateScope();
@@ -41,10 +42,18 @@ public class Worker(
 
     private static async Task SeedDataAsync(TodoContext dbContext, CancellationToken cancellationToken)
     {
+        TodoItem item = new()
+        {
+            Name = "Test",
+            IsComplete = true,
+        };
+
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {
             await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            await dbContext.TodoItems.AddAsync(item, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         });
     }
