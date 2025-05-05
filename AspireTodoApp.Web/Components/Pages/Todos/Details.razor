@@ -1,5 +1,43 @@
-﻿<h3>Details</h3>
+﻿@page "/todos/{id:int}"
+@using AspireTodoApp.Web.ApiClients
+@using AspireTodoApp.Web.Models.Responses
+
+@inject ILogger<Details> Logger
+@inject TodoApiClient TodoApi
+@inject NavigationManager Navigation
+
+<h1>Todo詳細</h1>
+
+<NavLink href="/todos">戻る</NavLink>
+
+@if (_todoItem == null)
+{
+    <p>読み込み中...</p>
+}
+else
+{
+    <div>
+        <h4>@_todoItem.Name</h4>
+        <p>IsCompleted:@_todoItem.IsComplete</p>
+    </div>
+}
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
 
+    private TodoItemDto? _todoItem;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _todoItem = await TodoApi.GetTodoItemAsync(Id);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogWarning(message: $"エラー: {ex.Message}");
+            Navigation.NavigateTo("/todos");
+        }
+    }
 }

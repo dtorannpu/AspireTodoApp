@@ -1,6 +1,9 @@
 using AspireTodoApp.Web;
 using AspireTodoApp.Web.ApiClients;
 using AspireTodoApp.Web.Components;
+using System.Text;
+
+Console.OutputEncoding = Encoding.UTF8;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -27,7 +27,7 @@ else
             @foreach (var todoItem in _todoItems)
             {
                 <tr>
-                    <td>@todoItem.Id</td>
+                    <td><NavLink href="@($"/todos/{todoItem.Id}")">@todoItem.Id</NavLink></td>
                     <td>@todoItem.Name</td>
                     <td>@todoItem.IsComplete</td>
                 </tr>
