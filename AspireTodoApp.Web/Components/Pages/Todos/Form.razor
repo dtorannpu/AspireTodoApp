@@ -27,7 +27,7 @@ else
         <DataAnnotationsValidator/>
         <ValidationSummary/>
         <div>
-            <label>Name:<InputText @bind-Value="Model!.Name"/></label>
+            <label>Title:<InputText @bind-Value="Model!.Title"/></label>
         </div>
         <div>
             <label>IsComplete:<InputCheckbox @bind-Value="Model.IsComplete"/></label>
@@ -67,7 +67,7 @@ else
                 }
                 Model = new()
                     {
-                        Name = item.Name,
+                        Title = item.Title,
                         IsComplete = item.IsComplete,
                     };
             }
@@ -90,7 +90,7 @@ else
             var request = new UpdateRequest()
                 {
                     Id = Id!.Value,
-                    Name = Model!.Name,
+                    Title = Model!.Title,
                     IsComplete = Model.IsComplete,
                 };
             var response = await TodoApi.PutTodoItemAsync(Id!.Value, request);
@@ -107,7 +107,7 @@ else
         {
             var request = new CreateRequest
                 {
-                    Name = Model!.Name,
+                    Title = Model!.Title,
                     IsComplete = Model.IsComplete,
                 };
             var response = await TodoApi.PostTodoItemAsync(request);

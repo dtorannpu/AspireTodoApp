@@ -44,7 +44,7 @@ public class Worker(
     {
         TodoItem item = new()
         {
-            Name = "Test",
+            Title = "Test",
             IsComplete = true,
         };
 

@@ -17,7 +17,7 @@ namespace AspireTodoApp.DataAccess.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     IsComplete = table.Column<bool>(type: "boolean", nullable: false),
                     Secret = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },

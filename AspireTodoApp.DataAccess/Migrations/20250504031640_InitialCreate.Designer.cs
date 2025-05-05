@@ -35,7 +35,7 @@ namespace AspireTodoApp.DataAccess.Migrations
                     b.Property<bool>("IsComplete")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 

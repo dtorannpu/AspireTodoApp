@@ -25,7 +25,7 @@ else
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Title</th>
                 <th>IsComplete</th>
                 <th></th>
             </tr>
@@ -35,7 +35,7 @@ else
             {
                 <tr>
                     <td><NavLink href="@($"/todos/{todoItem.Id}")">@todoItem.Id</NavLink></td>
-                    <td>@todoItem.Name</td>
+                    <td>@todoItem.Title</td>
                     <td>@todoItem.IsComplete</td>
                     <td>
                         <NavLink href="@($"/todos/{todoItem.Id}")">詳細</NavLink>

@@ -48,7 +48,7 @@ public class TodoItemsController(TodoContext context) : ControllerBase
             return NotFound();
         }
 
-        todoItem.Name = todoDto.Name;
+        todoItem.Title = todoDto.Title;
         todoItem.IsComplete = todoDto.IsComplete;
 
         try
@@ -71,7 +71,7 @@ public class TodoItemsController(TodoContext context) : ControllerBase
         var todoItem = new TodoItem
         {
             IsComplete = todoDto.IsComplete,
-            Name = todoDto.Name
+            Title = todoDto.Title
         };
 
         context.TodoItems.Add(todoItem);
@@ -104,7 +104,7 @@ public class TodoItemsController(TodoContext context) : ControllerBase
     private static TodoItemDto ItemToDto(TodoItem item) => new()
     {
         Id = item.Id,
-        Name = item.Name,
+        Title = item.Title,
         IsComplete = item.IsComplete
     };
 }
