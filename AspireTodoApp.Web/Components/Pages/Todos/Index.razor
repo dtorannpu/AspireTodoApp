@@ -2,10 +2,16 @@
 @using AspireTodoApp.Web.ApiClients
 @using AspireTodoApp.Web.Models.Responses
 @attribute [StreamRendering]
-
+@rendermode InteractiveServer
+@inject IJSRuntime Js
 @inject TodoApiClient TodoApi
 
 <h1>Todo一覧</h1>
+
+@if (!string.IsNullOrEmpty(_statusMessage))
+{
+    <p style="color: red;">@_statusMessage</p>
+}
 
 @if (_todoItems == null)
 {
@@ -34,6 +40,7 @@ else
                     <td>
                         <NavLink href="@($"/todos/{todoItem.Id}")">詳細</NavLink>
                         <NavLink href="@($"/todos/{todoItem.Id}/edit")">編集</NavLink>
+                        <button @onclick="() => ConfirmDelete(todoItem.Id)">削除</button>
                     </td>
                 </tr>
             }
@@ -43,10 +50,30 @@ else
 
 @code {
     private TodoItemDto[]? _todoItems;
+    private string? _statusMessage;
 
     protected override async Task OnInitializedAsync()
     {
         _todoItems = await TodoApi.GetTodoItemsAsync();
     }
 
+    private async Task ConfirmDelete(long id)
+    {
+        bool confirmed = await Js.InvokeAsync<bool>("confirm", "本当に削除しますか？");
+        if (confirmed)
+        {
+            await DeleteTodoItem(id);
+        }
+    }
+
+    private async Task DeleteTodoItem(long id)
+    {
+        var response = await TodoApi.DeleteTodoItemAsync(id);
+        if (!response.IsSuccessStatusCode)
+        {
+            _statusMessage = "削除に失敗しました。";
+        }
+
+        _todoItems = await TodoApi.GetTodoItemsAsync();
+    }
 }

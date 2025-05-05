@@ -16,4 +16,7 @@ public class TodoApiClient(HttpClient httpClient)
 
     public async Task<HttpResponseMessage> PutTodoItemAsync(long id, UpdateRequest request) =>
         await httpClient.PutAsJsonAsync($"/api/todoitems/{id}", request);
+
+    public async Task<HttpResponseMessage> DeleteTodoItemAsync(long id) =>
+        await httpClient.DeleteAsync($"/api/todoitems/{id}");
 }
