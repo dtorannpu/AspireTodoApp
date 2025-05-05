@@ -33,6 +33,9 @@ else
             <label>IsComplete:<InputCheckbox @bind-Value="Model.IsComplete"/></label>
         </div>
         <div>
+            <label>Description:<InputTextArea @bind-Value="Model.Description"/></label>
+        </div>
+        <div>
             <button type="submit">@SubmitButtonText</button>
         </div>
     </EditForm>
@@ -69,6 +72,7 @@ else
                     {
                         Title = item.Title,
                         IsComplete = item.IsComplete,
+                        Description = item.Description,
                     };
             }
             catch (Exception ex)
@@ -92,6 +96,7 @@ else
                     Id = Id!.Value,
                     Title = Model!.Title,
                     IsComplete = Model.IsComplete,
+                    Description = Model.Description,
                 };
             var response = await TodoApi.PutTodoItemAsync(Id!.Value, request);
             if (response.IsSuccessStatusCode)
@@ -109,6 +114,7 @@ else
                 {
                     Title = Model!.Title,
                     IsComplete = Model.IsComplete,
+                    Description = Model.Description,
                 };
             var response = await TodoApi.PostTodoItemAsync(request);
             if (response.IsSuccessStatusCode)

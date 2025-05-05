@@ -34,7 +34,8 @@ public class TodoItemsControllerTests
     {
         // Arrange
         await using var context = new MockDb().CreateDbContext();
-        context.TodoItems.Add(new TodoItem { Id = 1, Title = "Test Item 1", IsComplete = false });
+        context.TodoItems.Add(new TodoItem
+            { Id = 1, Title = "Test Item 1", IsComplete = false, Description = "Description1" });
         context.TodoItems.Add(new TodoItem { Id = 2, Title = "Test Item 2", IsComplete = true });
         await context.SaveChangesAsync();
 
@@ -49,6 +50,7 @@ public class TodoItemsControllerTests
         Assert.Equal(2, items.Count);
         Assert.Contains(items, i => i.Title == "Test Item 1");
         Assert.Contains(items, i => i.Title == "Test Item 2");
+        Assert.Contains(items, i => i.Description == "Description1");
     }
 
     [Fact]
@@ -70,7 +72,7 @@ public class TodoItemsControllerTests
     {
         // Arrange
         await using var context = new MockDb().CreateDbContext();
-        var todoItem = new TodoItem { Id = 1, Title = "Test Item", IsComplete = true };
+        var todoItem = new TodoItem { Id = 1, Title = "Test Item", IsComplete = true, Description = "Description" };
         context.TodoItems.Add(todoItem);
         await context.SaveChangesAsync();
 
@@ -85,6 +87,7 @@ public class TodoItemsControllerTests
         Assert.Equal(1, item.Id);
         Assert.Equal("Test Item", item.Title);
         Assert.True(item.IsComplete);
+        Assert.Equal("Description", item.Description);
     }
 
     [Fact]
@@ -97,7 +100,8 @@ public class TodoItemsControllerTests
         await context.SaveChangesAsync();
 
         var controller = new TodoItemsController(context);
-        var updatedTodo = new TodoUpdateRequestDto { Id = 1, Title = "Updated Title", IsComplete = true };
+        var updatedTodo = new TodoUpdateRequestDto
+            { Id = 1, Title = "Updated Title", IsComplete = true, Description = "Updated Description" };
 
         // Act
         var result = await controller.PutTodoItem(1, updatedTodo);
@@ -107,6 +111,7 @@ public class TodoItemsControllerTests
         var updatedItem = await context.TodoItems.FindAsync(1L);
         Assert.NotNull(updatedItem);
         Assert.Equal("Updated Title", updatedItem.Title);
+        Assert.Equal("Updated Description", updatedItem.Description);
         Assert.True(updatedItem.IsComplete);
     }
 
@@ -146,7 +151,8 @@ public class TodoItemsControllerTests
         // Arrange
         await using var context = new MockDb().CreateDbContext();
         var controller = new TodoItemsController(context);
-        var newTodo = new TodoCreateRequestDto { Title = "New Item", IsComplete = false };
+        var newTodo = new TodoCreateRequestDto
+            { Title = "New Item", IsComplete = false, Description = "New Description" };
 
         // Act
         var result = await controller.PostTodoItem(newTodo);
@@ -160,6 +166,7 @@ public class TodoItemsControllerTests
         var itemInDb = await context.TodoItems.FindAsync(createdItem.Id);
         Assert.NotNull(itemInDb);
         Assert.Equal("New Item", itemInDb.Title);
+        Assert.Equal("New Description", itemInDb.Description);
         Assert.False(itemInDb.IsComplete);
     }
 
