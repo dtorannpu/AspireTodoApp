@@ -1,8 +1,10 @@
-﻿namespace AspireTodoApp.ApiService.Dtos.Requests;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AspireTodoApp.ApiService.Dtos.Requests;
 
 public class TodoCreateRequestDto
 {
-    public string? Title { get; set; }
+    [Required] [MaxLength(100)] public string? Title { get; set; }
     public bool IsComplete { get; set; }
-    public string? Description { get; set; }
+    [MaxLength(3000)] public string? Description { get; set; }
 }

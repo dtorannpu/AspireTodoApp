@@ -4,7 +4,7 @@ POST {{AspireTodoApp.ApiService_HostAddress}}/api/todoitems
 Content-Type: application/json
 
 {
-  "name": "walk dog",
+  "title": "walk dog",
   "isComplete": true
 }
 
@@ -25,7 +25,7 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "name": "test",
+  "title": "test",
   "isComplete": true
 }
 
