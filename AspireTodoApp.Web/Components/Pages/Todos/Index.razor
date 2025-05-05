@@ -1,4 +1,4 @@
-﻿@page "/todo"
+﻿@page "/todos"
 @using AspireTodoApp.Web.ApiClients
 @using AspireTodoApp.Web.Models.Responses
 @attribute [StreamRendering]
@@ -13,7 +13,7 @@
 }
 else
 {
-    <NavLink href="/todo/create">新規作成</NavLink>
+    <NavLink href="/todos/create">新規作成</NavLink>
 
     <table class="table">
         <thead>

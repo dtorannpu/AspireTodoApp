@@ -1,4 +1,4 @@
-﻿@page "/todo/create"
+﻿@page "/todos/create"
 @using AspireTodoApp.Web.ApiClients
 @using AspireTodoApp.Web.Models.Forms
 
@@ -6,6 +6,8 @@
 @inject TodoApiClient TodoApi
 
 <h1>Todo作成</h1>
+
+<NavLink href="/todos">戻る</NavLink>
 
 @if (!string.IsNullOrEmpty(_statusMessage))
 {
@@ -37,7 +39,7 @@
         var response = await TodoApi.PostTodoItemAsync(Model!);
         if (response.IsSuccessStatusCode)
         {
-            Navigation.NavigateTo("/todo"); 
+            Navigation.NavigateTo("/todos"); 
         }
         else
         {
