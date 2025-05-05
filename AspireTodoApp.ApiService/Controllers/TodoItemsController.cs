@@ -1,4 +1,5 @@
-﻿using AspireTodoApp.ApiService.Dtos;
+﻿using AspireTodoApp.ApiService.Dtos.Requests;
+using AspireTodoApp.ApiService.Dtos.Responses;
 using AspireTodoApp.DataAccess.Contexts;
 using AspireTodoApp.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ public class TodoItemsController(TodoContext context) : ControllerBase
     // PUT: api/TodoItems/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutTodoItem(long id, TodoItemDto todoDto)
+    public async Task<IActionResult> PutTodoItem(long id, TodoUpdateRequestDto todoDto)
     {
         if (id != todoDto.Id)
         {
@@ -65,7 +66,7 @@ public class TodoItemsController(TodoContext context) : ControllerBase
     // POST: api/TodoItems
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<TodoItemDto>> PostTodoItem(TodoItemDto todoDto)
+    public async Task<ActionResult<TodoItemDto>> PostTodoItem(TodoCreateRequestDto todoDto)
     {
         var todoItem = new TodoItem
         {

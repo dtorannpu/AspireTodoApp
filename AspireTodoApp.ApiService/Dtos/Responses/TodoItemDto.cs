@@ -1,4 +1,4 @@
-﻿namespace AspireTodoApp.ApiService.Dtos;
+﻿namespace AspireTodoApp.ApiService.Dtos.Responses;
 
 public class TodoItemDto
 {
