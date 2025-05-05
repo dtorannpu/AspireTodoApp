@@ -8,6 +8,6 @@ public class TodoApiClient(HttpClient httpClient)
     public async Task<TodoItemDto[]> GetTodoItemsAsync(CancellationToken cancellationToken = default) =>
         await httpClient.GetFromJsonAsync<TodoItemDto[]>("/api/todoitems", cancellationToken) ?? [];
 
-    public async Task<HttpResponseMessage> PostTodoItemAsync(TodoForm form) =>
+    public async Task<HttpResponseMessage> PostTodoItemAsync(CreateTodoForm form) =>
         await httpClient.PostAsJsonAsync("/api/todoitems", form);
 }

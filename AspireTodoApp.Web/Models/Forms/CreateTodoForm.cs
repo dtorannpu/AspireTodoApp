@@ -2,7 +2,7 @@
 
 namespace AspireTodoApp.Web.Models.Forms;
 
-public class TodoForm
+public class CreateTodoForm
 {
     [Required] [StringLength(100)] public string? Name { get; set; }
     [Required] public bool IsComplete { get; set; }
