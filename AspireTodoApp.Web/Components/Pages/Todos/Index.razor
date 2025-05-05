@@ -21,6 +21,7 @@ else
                 <th>ID</th>
                 <th>Name</th>
                 <th>IsComplete</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,10 @@ else
                     <td><NavLink href="@($"/todos/{todoItem.Id}")">@todoItem.Id</NavLink></td>
                     <td>@todoItem.Name</td>
                     <td>@todoItem.IsComplete</td>
+                    <td>
+                        <NavLink href="@($"/todos/{todoItem.Id}")">詳細</NavLink>
+                        <NavLink href="@($"/todos/{todoItem.Id}/edit")">編集</NavLink>
+                    </td>
                 </tr>
             }
         </tbody>

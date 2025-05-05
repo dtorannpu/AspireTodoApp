@@ -1,0 +1,125 @@
+﻿@page "/todos/create"
+@page "/todos/{id:long}/edit"
+@using AspireTodoApp.Web.ApiClients
+@using AspireTodoApp.Web.Models.Forms
+@using AspireTodoApp.Web.Models.Request.Todos
+
+@inject ILogger<Form> Logger
+@inject NavigationManager Navigation
+@inject TodoApiClient TodoApi
+
+<h1>@FormTitle</h1>
+
+<NavLink href="/todos">戻る</NavLink>
+
+@if (!string.IsNullOrEmpty(_statusMessage))
+{
+    <p style="color: red;">@_statusMessage</p>
+}
+
+@if (Model is null)
+{
+    <p>読み込み中...</p>
+}
+else
+{
+    <EditForm Model="Model" OnValidSubmit="Submit" FormName="TodoCreate">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+        <div>
+            <label>Name:<InputText @bind-Value="Model!.Name"/></label>
+        </div>
+        <div>
+            <label>IsComplete:<InputCheckbox @bind-Value="Model.IsComplete"/></label>
+        </div>
+        <div>
+            <button type="submit">@SubmitButtonText</button>
+        </div>
+    </EditForm>
+}
+
+@code {
+
+    [Parameter]
+    public long? Id { get; set; }
+    private string? _statusMessage;
+    [SupplyParameterFromForm] private TodoForm? Model { get; set; }
+    private bool IsEditMode => Id.HasValue;
+    private string FormTitle => IsEditMode ? "Todo編集" : "Todo作成";
+    private string SubmitButtonText => IsEditMode ? "更新" : "作成";
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Model is not null)
+        {
+            return;
+        }
+        if (IsEditMode)
+        {
+            try
+            {
+                var item = await TodoApi.GetTodoItemAsync(Id!.Value);
+                if (item is null)
+                {
+                    Navigation.NavigateTo("/todos");
+
+                    return;
+                }
+                Model = new()
+                    {
+                        Name = item.Name,
+                        IsComplete = item.IsComplete,
+                    };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogWarning(message: $"エラー: {ex.Message}");
+                Navigation.NavigateTo("/todos");
+            }
+        }
+        else
+        {
+            Model = new();
+        }
+    }
+
+    private async Task Submit()
+    {
+        if (IsEditMode)
+        {
+            var request = new UpdateRequest()
+                {
+                    Id = Id!.Value,
+                    Name = Model!.Name,
+                    IsComplete = Model.IsComplete,
+                };
+            var response = await TodoApi.PutTodoItemAsync(Id!.Value, request);
+            if (response.IsSuccessStatusCode)
+            {
+                Navigation.NavigateTo("/todos");
+            }
+            else
+            {
+                _statusMessage = "更新に失敗しました。";
+            }
+        }
+        else
+        {
+            var request = new CreateRequest
+                {
+                    Name = Model!.Name,
+                    IsComplete = Model.IsComplete,
+                };
+            var response = await TodoApi.PostTodoItemAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                Navigation.NavigateTo("/todos");
+            }
+            else
+            {
+                _statusMessage = "登録に失敗しました。";
+            }
+        }
+    }
+
+}
