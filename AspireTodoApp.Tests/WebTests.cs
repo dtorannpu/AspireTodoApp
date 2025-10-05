@@ -3,6 +3,7 @@ namespace AspireTodoApp.Tests;
 public class WebTests
 {
     [Fact]
+    [Trait("Category", "Integration")]
     public async Task GetWebResourceRootReturnsOkStatusCode()
     {
         // Arrange
@@ -21,7 +22,8 @@ public class WebTests
 
         // Act
         var httpClient = app.CreateHttpClient("webfrontend");
-        await resourceNotificationService.WaitForResourceAsync("webfrontend", KnownResourceStates.Running, TestContext.Current.CancellationToken)
+        await resourceNotificationService.WaitForResourceAsync("webfrontend", KnownResourceStates.Running,
+                TestContext.Current.CancellationToken)
             .WaitAsync(TimeSpan.FromSeconds(30), TestContext.Current.CancellationToken);
         var response = await httpClient.GetAsync("/", TestContext.Current.CancellationToken);
 
