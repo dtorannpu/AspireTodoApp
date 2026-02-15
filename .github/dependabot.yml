@@ -15,8 +15,9 @@ updates:
       aspire:
         patterns:
           - "Aspire.*"
-          - "Microsoft.Extensions.ServiceDiscovery"
-          - "Microsoft.Extensions.Http.Resilience"
+      microsoft:
+        patterns:
+          - "Microsoft.*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
