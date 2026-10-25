@@ -17,6 +17,9 @@ updates:
       aspire:
         patterns:
           - "Aspire.*"
+      opentelemetry:
+        patterns:
+          - "OpenTelemetry.*"
       microsoft:
         patterns:
           - "Microsoft.*"
