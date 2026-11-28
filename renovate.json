@@ -2,5 +2,29 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "schedule": [
+    "before 6am on monday"
+  ],
+  "minimumReleaseAge": "7 days",
+  "assignees": [
+    "dtorannpu"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["Aspire.*"],
+      "groupName": "aspire"
+    },
+    {
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["OpenTelemetry.*"],
+      "groupName": "opentelemetry"
+    },
+    {
+      "matchManagers": ["nuget"],
+      "matchPackageNames": ["Microsoft.*"],
+      "groupName": "microsoft"
+    }
   ]
 }
